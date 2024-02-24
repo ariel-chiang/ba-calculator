@@ -1,13 +1,53 @@
 body {
+  text-align: center;
+  font-size: 1em;
+  font-family: verdana;
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+}
+h1 {
+  font-size: 1.5em;
+  padding: 20px 0;
+  color: #333;
+}
+.calculator {
+  max-width: 400px;
+  margin: auto;
+  border-style: solid;
+  border-color: #666;
+  background-color: #333;
+}
+.result {
+  border-style: solid;
+  border-color: #666;
+  background-color: #eee;
+  text-align: right;
+  font-size: 1.5em;
+  max-width: 300px;
+  margin: 20px auto;
+  padding: 10px;
+  color: black;
+}
+.result .history {
+  font-size: 0.5em;
+  max-width: 350px;
+  min-height: 14.5px;
+  padding: 10px;
+  color: #666;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+.keypad {
+  display: grid;
+  grid-template-columns: auto auto auto auto auto;
+  max-width: 350px;
+  margin: 20px auto;
+}
+.keypad > button {
+  font-size: 1.1em;
+  margin: 5px;
+  width: 60px;
+  height: 50px;
+  background: #eee;
+  display: inline-block;
+  border-radius: 6px;
+  line-height: 50px;
 }
