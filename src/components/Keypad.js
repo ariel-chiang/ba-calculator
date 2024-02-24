@@ -94,6 +94,7 @@ export default function Keypad({
   useEffect(() => {
     if (tempResult === "") {
       try {
+        // eslint-disable-next-line no-eval
         setResult(eval(history).toFixed(4));
       } catch (e) {
         setResult("ERROR");
@@ -101,7 +102,7 @@ export default function Keypad({
     } else {
       setResult(tempResult);
     }
-  }, [tempResult, history]);
+  }, [tempResult, history, setResult]);
 
   return (
     <div className="keypad">
