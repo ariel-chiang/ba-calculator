@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import useTVM from "../hooks/useTVM";
 
 export default function Keypad({
   history,
@@ -7,8 +8,14 @@ export default function Keypad({
   setResult,
   operator,
   setOperator,
+  setTVMinfo,
 }) {
   const keys = [
+    { key: "CPT", symbol: "CPT" },
+    { key: "P/Y", symbol: "P/Y" },
+    { key: "C/Y", symbol: "C/Y" },
+    { key: "CLR_TVM", symbol: "CLR TVM" },
+    { key: "->", symbol: "→" },
     { key: "N", symbol: "N" },
     { key: "I/Y", symbol: "I/Y" },
     { key: "PV", symbol: "PV" },
@@ -41,8 +48,32 @@ export default function Keypad({
     { key: "=", symbol: "=" },
   ];
 
+  const {
+    numPeriod,
+    interestRate,
+    presentValue,
+    payment,
+    futureValue,
+    paymentYear,
+    compoundYear,
+    setN,
+    setIY,
+    setPV,
+    setPMT,
+    setFV,
+    setPY,
+    setCY,
+    computeN,
+    computeIY,
+    computePV,
+    computePMT,
+    computeFV,
+    clearTVM,
+  } = useTVM();
+
   const operators = ["=", "+", "-", "*", "/", "**"];
   const immediate_ops = ["**(-1)", "*0.01", "e^x", "LN", "*(-1)"];
+  const tvm_ops = ["N", "I/Y", "PV", "PMT", "FV", "P/Y", "C/Y"];
 
   const [tempResult, setTempResult] = useState("0");
 
@@ -74,6 +105,25 @@ export default function Keypad({
       }
       setTempResult("");
       setOperator("=");
+    } else if (tvm_ops.includes(k.key)) {
+      if (k.key === "N") {
+        setN(result);
+      } else if (k.key === "I/Y") {
+        setIY(result);
+      } else if (k.key === "PV") {
+        setPV(result);
+      } else if (k.key === "PMT") {
+        setPMT(result);
+      } else if (k.key === "FV") {
+        setFV(result);
+      } else if (k.key === "P/Y") {
+        setPY(result);
+      } else if (k.key === "C/Y") {
+        setCY(result);
+      }
+      setHistory(k.key);
+      setTempResult("");
+      setOperator("=");
     } else {
       if (operator !== "") {
         if (operator === "=") {
@@ -94,15 +144,45 @@ export default function Keypad({
   useEffect(() => {
     if (tempResult === "") {
       try {
-        // eslint-disable-next-line no-eval
-        setResult(eval(history).toFixed(4));
+        if (tvm_ops.includes(history) === false) {
+          // eslint-disable-next-line no-eval
+          setResult(eval(history).toFixed(4));
+        }
       } catch (e) {
         setResult("ERROR");
       }
     } else {
       setResult(tempResult);
     }
-  }, [tempResult, history, setResult]);
+  }, [tempResult, history, setResult, tvm_ops]);
+
+  useEffect(() => {
+    setTVMinfo(
+      "Number of periods (N): " +
+        numPeriod +
+        ", Interest rate per year (I/Y): " +
+        interestRate +
+        ", Present value (PV): " +
+        presentValue +
+        ", Payment (PMT): " +
+        payment +
+        ", Future value (FV): " +
+        futureValue +
+        ", Number of payments per year (P/Y): " +
+        paymentYear +
+        ", Number of compounding periods per year (C/Y): " +
+        compoundYear
+    );
+  }, [
+    numPeriod,
+    interestRate,
+    presentValue,
+    payment,
+    futureValue,
+    setTVMinfo,
+    paymentYear,
+    compoundYear,
+  ]);
 
   return (
     <div className="keypad">

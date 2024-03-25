@@ -9,6 +9,33 @@ h1 {
   padding: 20px 0;
   color: #333;
 }
+h2 {
+  font-size: 1.2em;
+  padding: 20px 0;
+  color: #333;
+}
+.tvm-settings {
+  padding: 20px;
+  text-align: left;
+}
+.tvm-item {
+  margin: 0.5em;
+}
+.tvm-instructions {
+  text-align: center;
+  font-size: 1.2em;
+  font-family: "Courier New", Courier, monospace;
+}
+.grid-container {
+  display: grid;
+  grid-template-columns: auto auto;
+  gap: 10px;
+  padding: 20px;
+}
+.grid-calculator {
+  grid-row-start: 1;
+  grid-row-end: 3;
+}
 .calculator {
   max-width: 400px;
   margin: auto;
@@ -49,5 +76,5 @@ h1 {
   background: #eee;
   display: inline-block;
   border-radius: 6px;
-  line-height: 50px;
+  line-height: 15px;
 }
