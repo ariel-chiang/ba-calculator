@@ -128,9 +128,9 @@ export default function Keypad({
       } else if (k.key === "FV") {
         if (computeMode) {
           setComputeMode(false);
-          setResult(computeFV());
+          setResult(computeFV().toFixed(4));
         } else {
-          setFV(result.toFixed(4));
+          setFV(result);
         }
       } else if (k.key === "P/Y") {
         setPY(result);
