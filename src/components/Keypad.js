@@ -76,6 +76,7 @@ export default function Keypad({
   const tvm_ops = ["N", "I/Y", "PV", "PMT", "FV", "P/Y", "C/Y"];
 
   const [tempResult, setTempResult] = useState("0");
+  const [computeMode, setComputeMode] = useState(false);
 
   const handleKey = (k) => {
     if (operator === "=") {
@@ -105,6 +106,16 @@ export default function Keypad({
       }
       setTempResult("");
       setOperator("=");
+    } else if (k.key === "CLR_TVM") {
+      setN(1);
+      setIY(1);
+      setPV(0);
+      setPMT(0);
+      setFV(0);
+      setPY(1);
+      setCY(1);
+    } else if (k.key === "CPT") {
+      setComputeMode(true);
     } else if (tvm_ops.includes(k.key)) {
       if (k.key === "N") {
         setN(result);
@@ -115,7 +126,12 @@ export default function Keypad({
       } else if (k.key === "PMT") {
         setPMT(result);
       } else if (k.key === "FV") {
-        setFV(result);
+        if (computeMode) {
+          setComputeMode(false);
+          setResult(computeFV());
+        } else {
+          setFV(result.toFixed(4));
+        }
       } else if (k.key === "P/Y") {
         setPY(result);
       } else if (k.key === "C/Y") {
